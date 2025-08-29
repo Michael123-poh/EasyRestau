@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 11:27 AM
+-- Generation Time: Aug 29, 2025 at 03:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,10 @@ CREATE TABLE `categorieplat` (
 INSERT INTO `categorieplat` (`idCategorie`, `nomCategorie`, `dateCreateCategorie`) VALUES
 ('CAT00001', 'Entrées', '2025-08-28 21:56:58'),
 ('CAT00002', 'Plats Principaux', '2025-08-28 21:57:46'),
-('CAT00003', 'Desserts', '2025-08-28 21:58:33');
+('CAT00003', 'Desserts', '2025-08-28 21:58:33'),
+('CAT00004', 'Boissons', '2025-08-29 12:27:04'),
+('CAT00005', 'Glaces', '2025-08-29 12:28:22'),
+('CAT00006', 'Menus Complets', '2025-08-29 13:53:15');
 
 -- --------------------------------------------------------
 
@@ -96,6 +99,19 @@ CREATE TABLE `ingredient` (
   `dateCreateIngredient` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ingredient`
+--
+
+INSERT INTO `ingredient` (`idIngredient`, `nomIngredient`, `qteEnStock`, `prixAchat`, `dateCreateIngredient`) VALUES
+('IGT00001', 'Viande de boeuf', 15, 52500, '2025-08-29 13:02:04'),
+('IGT00002', 'Poulet', 5, 25000, '2025-08-29 13:03:18'),
+('IGT00003', 'Tomate', 500, 8000, '2025-08-29 13:03:47'),
+('IGT00004', 'Huile raffinée', 10, 15000, '2025-08-29 13:04:58'),
+('IGT00005', 'Oignons', 5, 5000, '2025-08-29 13:05:48'),
+('IGT00006', 'Ails', 5, 7500, '2025-08-29 13:06:55'),
+('IGT00007', 'Condiments verts(Poiro, celeris, persils, basilic, poivrons, haricots verts, carottes)', 5, 3000, '2025-08-29 13:13:53');
+
 -- --------------------------------------------------------
 
 --
@@ -105,6 +121,7 @@ CREATE TABLE `ingredient` (
 CREATE TABLE `plat` (
   `idPlat` varchar(255) NOT NULL,
   `nomPlat` varchar(255) NOT NULL,
+  `descriptionPlat` text DEFAULT NULL,
   `prixRevientPlat` double DEFAULT NULL,
   `prixVentePlat` double DEFAULT NULL,
   `idCategorie` varchar(255) NOT NULL,
@@ -120,7 +137,7 @@ CREATE TABLE `plat` (
 CREATE TABLE `plat_ingredient` (
   `idPlat` varchar(255) NOT NULL,
   `idIngredient` varchar(255) NOT NULL,
-  `qteNecessaire` double DEFAULT NULL,
+  `qteNecessaire` varchar(255) DEFAULT NULL,
   `dateCreatePlatIngredient` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
