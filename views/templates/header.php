@@ -275,7 +275,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link">
+                            <a href="../controllers/H_facturationController.php" class="nav-link">
                                 <i class="bi bi-currency-euro"></i>
                                 Facturation
                             </a>

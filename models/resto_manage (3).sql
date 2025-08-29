@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 03:55 PM
+-- Generation Time: Aug 29, 2025 at 11:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -110,7 +110,8 @@ INSERT INTO `ingredient` (`idIngredient`, `nomIngredient`, `qteEnStock`, `prixAc
 ('IGT00004', 'Huile raffinée', 10, 15000, '2025-08-29 13:04:58'),
 ('IGT00005', 'Oignons', 5, 5000, '2025-08-29 13:05:48'),
 ('IGT00006', 'Ails', 5, 7500, '2025-08-29 13:06:55'),
-('IGT00007', 'Condiments verts(Poiro, celeris, persils, basilic, poivrons, haricots verts, carottes)', 5, 3000, '2025-08-29 13:13:53');
+('IGT00007', 'Condiments verts(Poiro, celeris, persils, basilic, poivrons, haricots verts, carottes)', 5, 3000, '2025-08-29 13:13:53'),
+('IGT00008', 'Riz', 25, 25000, '2025-08-29 14:00:44');
 
 -- --------------------------------------------------------
 
@@ -128,6 +129,15 @@ CREATE TABLE `plat` (
   `dateCreatePlat` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `plat`
+--
+
+INSERT INTO `plat` (`idPlat`, `nomPlat`, `descriptionPlat`, `prixRevientPlat`, `prixVentePlat`, `idCategorie`, `dateCreatePlat`) VALUES
+('PLT00001', 'Viande sautee', 'viande sautee aux legumes frais accompagnees de pommes frites.', 2500, 4000, 'CAT00002', '2025-08-29 17:37:25'),
+('PLT00002', 'Salade Fraiche', 'Salade Fraiche accompagne de sa saute vinégrete.', 1000, 1500, 'CAT00001', '2025-08-29 18:52:31'),
+('PLT00003', 'Riz cantonne', 'Riz cantonne a la viande fumee et aux epices brutes.', 2500, 3500, 'CAT00002', '2025-08-29 18:55:44');
+
 -- --------------------------------------------------------
 
 --
@@ -140,6 +150,15 @@ CREATE TABLE `plat_ingredient` (
   `qteNecessaire` varchar(255) DEFAULT NULL,
   `dateCreatePlatIngredient` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `plat_ingredient`
+--
+
+INSERT INTO `plat_ingredient` (`idPlat`, `idIngredient`, `qteNecessaire`, `dateCreatePlatIngredient`) VALUES
+('PLT00001', 'IGT00001', '0.3', '2025-08-29 17:37:25'),
+('PLT00002', 'IGT00007', '0.5', '2025-08-29 18:52:31'),
+('PLT00003', 'IGT00008', '00.5', '2025-08-29 18:55:44');
 
 -- --------------------------------------------------------
 

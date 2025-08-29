@@ -6,6 +6,10 @@
     $H_dbConnect = F_databaseConnection("localhost", "resto_manage", "root", "");
     require('../models/H_functionsModels.php');
 
+        $H_nbrePlats = F_executeRequeteSql('SELECT COUNT(*) AS nbrePlat FROM plat');
+        $H_listeCategorie = F_executeRequeteSql('SELECT * FROM categorieplat');
+        $H_listePlats = F_executeRequeteSql('SELECT p.* FROM plat p ORDER BY p.dateCreatePlat DESC');
+
     if(isset($_POST['Creer'])) {
         $H_nomCategorie = $_POST['H_nomCategorie'];
 
@@ -29,8 +33,13 @@
     
 
         // Redirection vers la page du menu après l'insertion
-        header("Location: ../views/Menu.php");
+        header("Location: ../controllers/H_menuController.php");
         exit();
+    }
+    if(isset($_POST['H_categorieMenu'])) {
+        $H_idCat = $_GET['H_idCat'];
+        $H_listePlats = F_executeRequeteSql('SELECT p.* FROM plat p WHERE p.idCategorie = ? ORDER BY p.dateCreatePlat DESC', [$H_idCat]);
+        
     }
     require('../views/Menu.php');
 ?>

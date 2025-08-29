@@ -14,7 +14,13 @@
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="text-uppercase text-muted fw-bold mb-0">Total Plats</h6>
-                                        <h3 class="mb-0">36</h3>
+                                        <h3 class="mb-0">
+                                            <?php
+                                                foreach($H_nbrePlats as $H_nbrePlat){
+                                                    echo $H_nbrePlat->nbrePlat;
+                                                }
+                                            ?>
+                                        </h3>
                                     </div>
                                     <div class="col-auto">
                                         <span class="display-6"><i class="bi bi-basket text-primary"></i></span>
@@ -30,7 +36,13 @@
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="text-uppercase text-muted fw-bold mb-0">Plats Actifs</h6>
-                                        <h3 class="mb-0">32</h3>
+                                        <h3 class="mb-0">
+                                            <?php
+                                                foreach($H_nbrePlats as $H_nbrePlat){
+                                                    echo $H_nbrePlat->nbrePlat;
+                                                }
+                                            ?>
+                                        </h3>
                                     </div>
                                     <div class="col-auto">
                                         <span class="display-6"><i class="bi bi-check-circle text-success"></i></span>
@@ -78,11 +90,13 @@
                     <div class="col-md-8">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-primary active">Tous</button>
-                            <button type="button" class="btn btn-outline-primary">Entrées</button>
-                            <button type="button" class="btn btn-outline-primary">Plats Principaux</button>
-                            <button type="button" class="btn btn-outline-primary">Desserts</button>
-                            <button type="button" class="btn btn-outline-primary">Boissons</button>
-                            <button type="button" class="btn btn-outline-primary">Végétariens</button>
+                            <?php
+                                foreach($H_listeCategorie as $H_categorie){
+                            ?>
+                            <button type="button" class="btn btn-outline-primary"><?=$H_categorie->nomCategorie?></button>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                     <div class="col-md-4 text-end">
@@ -98,21 +112,25 @@
                 
                 <!-- Dishes Cards -->
                 <div class="row">
+                    <?php
+                        foreach($H_listePlats as $H_plat){
+                            $H_categoriePlat = F_executeRequeteSql('SELECT nomCategorie FROM categorieplat WHERE idCategorie = ?', [$H_plat->idCategorie]);
+                    ?>
                     <!-- Dish Item 1 -->
                     <div class="col-xl-4 col-md-6 mb-4">
                         <div class="card dish-card dish-main">
                             <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Steak Frites">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Steak Frites</h5>
-                                    <span class="category-badge badge-main">Plat Principal</span>
+                                    <h5 class="card-title mb-0"><?=$H_plat->nomPlat?></h5>
+                                    <span class="category-badge badge-main"><?=$H_categoriePlat->nomCategorie?></span>
                                 </div>
-                                <p class="card-text">Steak de bœuf charolais avec frites maison et sauce au choix.</p>
+                                <p class="card-text"><?=$H_plat->descriptionPlat?></p>
                                 
                                 <div class="row mb-2">
                                     <div class="col-6">
-                                        <span class="price-tag">18,50 €</span>
-                                        <div class="profit-margin">Coût: 6,20 €</div>
+                                        <span class="price-tag"><?=$H_plat->prixVentePlat?> F CFA</span>
+                                        <div class="profit-margin">Coût: <?=$H_plat->prixRevientPlat?> F CFA</div>
                                     </div>
                                     <div class="col-6 text-end">
                                         <span class="stock-info good-stock">En stock</span>
@@ -129,168 +147,10 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Dish Item 2 -->
-                    <div class="col-xl-4 col-md-6 mb-4">
-                        <div class="card dish-card dish-appetizer">
-                            <img src="https://images.unsplash.com/photo-1619894991209-32b8fb1d5ce3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Salade César">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Salade César</h5>
-                                    <span class="category-badge badge-appetizer">Entrée</span>
-                                </div>
-                                <p class="card-text">Salade fraîche avec poulet grillé, croûtons et parmesan, sauce césar.</p>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <span class="price-tag">9,90 €</span>
-                                        <div class="profit-margin">Coût: 4,00 €</div>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="stock-info low-stock">Stock faible</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="badge bg-success">Marge: 60%</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dish Item 3 -->
-                    <div class="col-xl-4 col-md-6 mb-4">
-                        <div class="card dish-card dish-dessert">
-                            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Fondant Chocolat">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Fondant Chocolat</h5>
-                                    <span class="category-badge badge-dessert">Dessert</span>
-                                </div>
-                                <p class="card-text">Gâteau au chocolat fondant avec cœur coulant, glace vanille.</p>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <span class="price-tag">7,50 €</span>
-                                        <div class="profit-margin">Coût: 3,00 €</div>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="stock-info good-stock">En stock</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="badge bg-success">Marge: 60%</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dish Item 4 -->
-                    <div class="col-xl-4 col-md-6 mb-4">
-                        <div class="card dish-card dish-vegan">
-                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Bowl Végétarien">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Bowl Végétarien</h5>
-                                    <span class="category-badge badge-vegan">Végétarien</span>
-                                </div>
-                                <p class="card-text">Bowl healthy avec quinoa, avocat, légumes grillés et sauce tahini.</p>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <span class="price-tag">14,90 €</span>
-                                        <div class="profit-margin">Coût: 5,20 €</div>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="stock-info good-stock">En stock</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="badge bg-success">Marge: 65%</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dish Item 5 -->
-                    <div class="col-xl-4 col-md-6 mb-4">
-                        <div class="card dish-card dish-drink">
-                            <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Cocktail Maison">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Cocktail Maison</h5>
-                                    <span class="category-badge badge-drink">Boisson</span>
-                                </div>
-                                <p class="card-text">Notre cocktail signature à base de fruits frais, rhum et menthe.</p>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <span class="price-tag">8,50 €</span>
-                                        <div class="profit-margin">Coût: 3,00 €</div>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="stock-info low-stock">Stock critique</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="badge bg-success">Marge: 65%</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dish Item 6 -->
-                    <div class="col-xl-4 col-md-6 mb-4">
-                        <div class="card dish-card dish-main">
-                            <img src="https://images.unsplash.com/photo-1598214886806-c87b84b7078b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="dish-img" alt="Saumon Grillé">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="card-title mb-0">Saumon Grillé</h5>
-                                    <span class="category-badge badge-main">Plat Principal</span>
-                                </div>
-                                <p class="card-text">Filet de saumon grillé avec riz basmati et légumes de saison.</p>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <span class="price-tag">22,50 €</span>
-                                        <div class="profit-margin">Coût: 9,30 €</div>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="stock-info good-stock">En stock</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="badge bg-success">Marge: 59%</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                    <?php
+                        }                    
+                    ?>
+                  
                 <!-- Recipe Details Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-white">
@@ -312,41 +172,41 @@
                                     <tr>
                                         <td>Steak de bœuf</td>
                                         <td>300 g</td>
-                                        <td>15,00 €/kg</td>
-                                        <td>4,50 €</td>
+                                        <td>15,00 FCFA/kg</td>
+                                        <td>4,50 FCFA</td>
                                         <td class="good-stock">12,5 kg</td>
                                     </tr>
                                     <tr>
                                         <td>Pommes de terre</td>
                                         <td>200 g</td>
-                                        <td>2,50 €/kg</td>
-                                        <td>0,50 €</td>
+                                        <td>2,50 FCFA/kg</td>
+                                        <td>0,50 FCFA</td>
                                         <td class="good-stock">25,8 kg</td>
                                     </tr>
                                     <tr>
                                         <td>Salade verte</td>
                                         <td>50 g</td>
-                                        <td>4,00 €/kg</td>
-                                        <td>0,20 €</td>
+                                        <td>4,00 FCFA/kg</td>
+                                        <td>0,20 FCFA</td>
                                         <td class="low-stock">2,3 kg</td>
                                     </tr>
                                     <tr>
                                         <td>Sauce</td>
                                         <td>50 g</td>
-                                        <td>8,00 €/kg</td>
-                                        <td>0,40 €</td>
+                                        <td>8,00 FCFA/kg</td>
+                                        <td>0,40 FCFA</td>
                                         <td class="good-stock">8,7 kg</td>
                                     </tr>
                                     <tr>
                                         <td>Assaisonnement</td>
                                         <td>20 g</td>
-                                        <td>10,00 €/kg</td>
-                                        <td>0,20 €</td>
+                                        <td>10,00 FCFA/kg</td>
+                                        <td>0,20 FCFA</td>
                                         <td class="good-stock">5,2 kg</td>
                                     </tr>
                                     <tr class="table-light">
                                         <td colspan="3" class="fw-bold">Total</td>
-                                        <td class="fw-bold">5,80 €</td>
+                                        <td class="fw-bold">5,80 FCFA</td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -382,18 +242,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="post" action="../controllers/H_platController.php">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="dishName" class="form-label">Nom du Plat</label>
-                                <input type="text" class="form-control" id="dishName" required>
+                                <input type="text" class="form-control" id="dishName" name="H_nomPlat" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="dishCategory" class="form-label">Catégorie</label>
-                                <select class="form-select" id="dishCategory" required>
+                                <select class="form-select" id="dishCategory" name="H_idCategorie" required>
                                     <option value="">Choisir une catégorie...</option>
                                     <?php foreach($H_listeCategorie as $H_categorie){?>
-                                    <option value=<?=$H_categorie->idCategorie?>><?=$H_categorie->nomCategorie?></option>
+                                    <option value="<?=$H_categorie->idCategorie?>"><?=$H_categorie->nomCategorie?></option>
                                     <?php }?>
                                 </select>
                             </div>
@@ -401,32 +261,31 @@
                         
                         <div class="mb-3">
                             <label for="dishDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="dishDescription" rows="2"></textarea>
+                            <textarea class="form-control" id="dishDescription" name="H_descriptionPlat" rows="2"></textarea>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="costPrice" class="form-label">Prix de Revient (€)</label>
-                                <input type="number" step="0.01" class="form-control" id="costPrice" required>
+                                <label for="costPrice" class="form-label">Prix de Revient (FCFA)</label>
+                                <input type="number" step="0.01" class="form-control" name="H_prixRevientPlat" id="costPrice" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="sellingPrice" class="form-label">Prix de Vente (€)</label>
-                                <input type="number" step="0.01" class="form-control" id="sellingPrice" required>
+                                <label for="sellingPrice" class="form-label">Prix de Vente (FCFA)</label>
+                                <input type="number" step="0.01" class="form-control" name="H_prixVentePlat" id="sellingPrice" required>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">Composition (ingrédients et quantités)</label>
                             <div class="input-group mb-2">
-                                <select class="form-select">
+                                <select class="form-select" name="H_idIngredient">
                                     <option selected>Choisir un ingrédient...</option>
-                                    <option>Poulet</option>
-                                    <option>Boeuf</option>
-                                    <option>Poisson</option>
-                                    <option>Riz</option>
-                                    <option>Crème fraîche</option>
+                                    <?php foreach($H_listeIngredients as $H_ingredient){?>
+                                    <option value="<?=$H_ingredient->idIngredient?>"><?=$H_ingredient->nomIngredient?></option>
+                                  
+                                    <?php }?>
                                 </select>
-                                <input type="number" step="0.1" class="form-control" placeholder="Quantité (kg)">
+                                <input type="number" step="0.1" name="H_qteNecessaire" class="form-control" placeholder="Quantité (kg)">
                                 <button class="btn btn-outline-secondary" type="button">Ajouter</button>
                             </div>
                             <div class="form-text">Liste des ingrédients ajoutés...</div>
@@ -434,13 +293,13 @@
                         
                         <div class="mb-3">
                             <label for="dishImage" class="form-label">Image du Plat</label>
-                            <input class="form-control" type="file" id="dishImage">
+                            <input class="form-control" type="file" id="dishImage" name="H_imagePlat">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary" name="CreerPlat">Créer le Plat</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary">Créer le Plat</button>
                 </div>
             </div>
         </div>
